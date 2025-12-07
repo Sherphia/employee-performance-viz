@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Employee Performance Visualization</title>
+</head>
+<body style="font-family:Arial; margin:20px;">
+
+<h2>Employee Performance Analysis</h2>
+
+<p><strong>Verification Email:</strong> 22f2001145@ds.study.iitm.ac.in</p>
+<p><strong>Sales Department Count:</strong> 23</p>
+
+<h3>Department Histogram</h3>
+<p>The histogram below shows the department distribution for 100 employees.</p>
+<img src="departments_hist.png" alt="Department Histogram" width="600">
+
+<h3>Python Code Used</h3>
+<pre style="background:#f4f4f4; padding:15px; border:1px solid #ddd;">
+# employee_performance.py
+# Author / Verification Email: 22f2001145@ds.study.iitm.ac.in
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# ---- STEP 1: Create Synthetic Dataset (100 Employees) ----
+
+np.random.seed(22)
+
+departments = ["Sales", "IT", "HR", "Finance", "Marketing", "Operations", "Support", "Logistics"]
+regions = ["South", "North", "East", "West"]
+
+# Generate dataset
+df = pd.DataFrame({
+    "Employee_ID": range(1, 101),
+    "Department": np.random.choice(departments, size=100, p=[0.20, 0.15, 0.10, 0.10, 0.10, 0.15, 0.10, 0.10]),
+    "Region": np.random.choice(regions, size=100),
+    "Performance_Score": np.random.randint(60, 100, size=100)
+})
+
+print("First 5 rows of dataset:")
+print(df.head())
+
+# ---- STEP 2: Count frequency of 'Sales' department ----
+sales_count = (df["Department"] == "Sales").sum()
+print("\nSales Department Count =", sales_count)
+
+# ---- STEP 3: Create Histogram of Department Distribution ----
+plt.figure(figsize=(10, 5))
+sns.countplot(data=df, x="Department", palette="viridis")
+plt.title("Department Distribution - Employee Performance Dataset")
+plt.xticks(rotation=30)
+plt.tight_layout()
+
+# Save histogram as PNG
+plt.savefig("departments_hist.png")
+print("\nSaved: departments_hist.png")
+
+# ---- STEP 4: Export as HTML ----
+
+html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Employee Performance Visualization</title>
+</head>
+<body style="font-family:Arial; margin:20px;">
+
+<h2>Employee Performance Analysis</h2>
+
+<p><strong>Verification Email:</strong> 22f2001145@ds.study.iitm.ac.in</p>
+<p><strong>Sales Department Count:</strong> {sales_count}</p>
+
+<h3>Department Histogram</h3>
+<p>The histogram below shows the department distribution for 100 employees.</p>
+<img src="departments_hist.png" alt="Department Histogram" width="600">
+
+<h3>Python Code Used</h3>
+<pre style="background:#f4f4f4; padding:15px; border:1px solid #ddd;">
+{open(__file__, "r").read() if "__file__" in globals() else "Code embedded manually when running in notebook."}
+</pre>
+
+</body>
+</html>
+"""
+
+with open("employee_performance.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("Saved: employee_performance.html")
+
+</pre>
+
+</body>
+</html>
